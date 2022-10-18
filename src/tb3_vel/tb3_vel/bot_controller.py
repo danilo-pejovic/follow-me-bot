@@ -4,7 +4,7 @@
 
 import sys
 
-from zmq import EVENT_CLOSE_FAILED
+
 import rclpy
 from geometry_msgs.msg import Twist
 from rclpy.qos import QoSProfile
@@ -14,7 +14,7 @@ import math
 import cv2
 import time
 import argparse
-from simple_pid import PID
+
 
 
 BURGER_MAX_LIN_VEL = 0.22
