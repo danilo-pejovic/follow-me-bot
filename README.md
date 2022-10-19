@@ -141,7 +141,7 @@ ros2 run tb3_vel controller
 
 You should get a camera feed and console should print out person distance in millimeters along with the speed it is instructing robot to go towards the person:
 
-![image2-commandoutput](blob:https://imgur.com/40b31023-f723-4237-9d0e-b8d92589b604)
+![image2-commandoutput](https://i.imgur.com/omD3eLd.png)
 
 Now if we start the TurtleBot and do the bring up command:
 
@@ -163,3 +163,5 @@ ros2 run tb3_vel controller
 ```
 
 should successfully bring the robot towards a person it is following. I recommend testing the software first with robot with its wheels taken off and then with ample free space so you can calibrate speed you need to limit your robot to.
+
+This guide should soon be upgraded to include Nav2 navigation along with SLAM method to map out robots surrounding. 
