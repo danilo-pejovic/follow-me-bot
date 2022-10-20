@@ -34,10 +34,11 @@ e = """
 Communications Failed
 """
 
-
+# List of possible objects neural network is able to detect, for our code we only need "person"
 labelMap = ["background", "aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", "cat", "chair", "cow",
             "diningtable", "dog", "horse", "motorbike", "person", "pottedplant", "sheep", "sofa", "train", "tvmonitor"]
 
+# Path to Neural Network blob
 nnPathDefault = str((Path(__file__).parent /
                     Path('/home/carma/ros2_follow_ws/mobilenet-ssd_openvino_2021.4_6shave.blob')).resolve().absolute())
 parser = argparse.ArgumentParser()
@@ -55,7 +56,7 @@ def create_pipeline():
     # Create pipeline
     pipeline = dai.Pipeline()
 
-    # Define sources and outputs
+    # Define sources and outputs, object created this way are called nodes
     camRgb = pipeline.create(dai.node.ColorCamera)
     spatialDetectionNetwork = pipeline.create(
         dai.node.MobileNetSpatialDetectionNetwork)
@@ -63,7 +64,6 @@ def create_pipeline():
     monoRight = pipeline.create(dai.node.MonoCamera)
     stereo = pipeline.create(dai.node.StereoDepth)
     objectTracker = pipeline.create(dai.node.ObjectTracker)
-
     xoutRgb = pipeline.create(dai.node.XLinkOut)
     trackerOut = pipeline.create(dai.node.XLinkOut)
 
@@ -71,6 +71,8 @@ def create_pipeline():
     trackerOut.setStreamName("tracklets")
 
     # Properties
+    # https://github.com/luxonis/depthai/tree/main/resources/nn holds some basic information about each NN
+    # like what screen size they expect. Wrong input will lead to a crash
     camRgb.setPreviewSize(300, 300)
     camRgb.setResolution(dai.ColorCameraProperties.SensorResolution.THE_1080_P)
     camRgb.setInterleaved(False)
@@ -102,7 +104,9 @@ def create_pipeline():
     objectTracker.setTrackerIdAssignmentPolicy(
         dai.TrackerIdAssignmentPolicy.SMALLEST_ID)
 
-    # Linking
+    # Link output of one function to be input of the other function
+    # That was 2 mono cameras become a stereo camera
+    # and spatial network gets feed from which it determines where a person is
     monoLeft.out.link(stereo.left)
     monoRight.out.link(stereo.right)
 
@@ -125,7 +129,7 @@ def create_pipeline():
     return pipeline
 
 
-
+# Determine linear velocity of an robot based on proximity to the target
 def linear_velocity(distance):
     sign= lambda x: math.copysign(1,x)
     if abs(distance)>100000.0:
@@ -160,6 +164,7 @@ def main():
    
     with dai.Device(create_pipeline()) as device:
 
+        # We first create a device from pipeline
         preview = device.getOutputQueue("preview", 4, False)
         tracklets = device.getOutputQueue("tracklets", 4, False)
 
@@ -175,7 +180,7 @@ def main():
         node = rclpy.create_node('bot_controller')
         pub = node.create_publisher(Twist, 'cmd_vel', qos)
 
-
+        # Loop in which we get position of an target from neural network and then calculate appropriate speed and pass that information to TurtleBot.
         print(msg)
         while(1):
                 imgFrame = preview.get()
