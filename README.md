@@ -122,7 +122,7 @@ python3 depthai_demo.py
 
 Depth AI code generally consists of a [pipeline](https://docs.luxonis.com/projects/api/en/latest/components/pipeline/) in which you set up your camera and determine how you want it to act. This project takes advantage of Spatial Detection capabilities of OAK-D cameras. 
 
-For this project pipeline is virtually the same as the pipeline for a[object tracker](https://github.com/luxonis/depthai-python/blob/main/examples/ObjectTracker/spatial_object_tracker.py) that is in a list of examples on Luxonis github page. 
+For this project pipeline is virtually the same as the pipeline for a [object tracker](https://github.com/luxonis/depthai-python/blob/main/examples/ObjectTracker/spatial_object_tracker.py) that is in a list of examples on Luxonis github page. 
 
 ## Getting everything to work together
 
