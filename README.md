@@ -53,6 +53,16 @@ $ source ~/.bashrc
 
 ![image1-VirtualBox](https://i.imgur.com/kd5obvO.png)
 
+When you give cli command 
+```
+ip addr
+```
+you should be given a reponse that looks similar to this
+
+![image2-VirtualBox](https://i.imgur.com/7LB0sUE.png)
+
+As far as this guide is concerned only Bridged Adapter IP address is relevant. Bridged Adapter links your VM to the network your host PC is on, so if you are not experienced in networking just find the IP of your host PC and the IP address (out of the few returned by ip addr command) that is similar to it likely belongs to Bridged Adapter.
+
 It could be useful to set ROS2 master and hostname for Raspberry Pi, so Raspberry Pi knows the IP of your Ubuntu machine. 
 
 ```
