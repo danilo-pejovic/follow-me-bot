@@ -91,7 +91,7 @@ Now open a different terminal (it is very important that installation of a packa
 ros2 run py_pubsub talker
 ```
 
-Follow the same procedure on Raspberry PI and run. Make sure both machines are on the same ROS domain.
+Follow the same procedure on Raspberry PI and run command below. Make sure both machines are on the same ROS domain.
 
 ```
 ros2 run py_pubsub listener
