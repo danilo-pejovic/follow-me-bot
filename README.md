@@ -107,9 +107,10 @@ Follow the same procedure on Raspberry PI and run command below. Make sure both 
 ros2 run py_pubsub listener
 ```
 
-You should see indications that machines can hear each other. If there are problems in communication common debugging method for communication between foxy and galactic is exporting the following environment variable inside the terminal you are running talker and listener node. 
+You should see indications that machines can hear each other. If there are problems in communication common debugging method for communication between foxy and galactic is exporting the following environment variables inside the terminal you are running talker and listener node. 
 
 ```
+export ROS_DOMAIN_ID=30
 export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 ```
 
